@@ -1,0 +1,5 @@
+Key Performance Indicators, or KPIs, are measurable values used to track progress toward business goals.
+
+Good KPI tracking practices include setting clear targets, monitoring performance regularly, aligning KPIs to strategy, and reviewing trends over time.
+
+Dashboards are commonly used to visualize KPI performance and identify underperforming initiatives.

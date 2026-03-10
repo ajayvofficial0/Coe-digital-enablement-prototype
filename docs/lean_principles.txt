@@ -1,0 +1,10 @@
+Lean principles focus on maximizing customer value while minimizing waste.
+
+The five lean principles are:
+1. Identify value
+2. Map the value stream
+3. Create flow
+4. Establish pull
+5. Pursue perfection
+
+Lean aims to remove waste such as overproduction, waiting, defects, excess inventory, and unnecessary motion.

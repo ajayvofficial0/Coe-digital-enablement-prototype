@@ -1,0 +1,10 @@
+Six Sigma is a process improvement methodology focused on reducing defects and variation.
+
+The main Six Sigma improvement cycle is DMAIC:
+- Define
+- Measure
+- Analyze
+- Improve
+- Control
+
+Six Sigma uses data-driven decision making and statistical analysis to improve quality and efficiency.
