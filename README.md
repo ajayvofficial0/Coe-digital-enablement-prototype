@@ -8,7 +8,7 @@
 ![VectorDB](https://img.shields.io/badge/Vector%20DB-FAISS-orange)
 ![Embeddings](https://img.shields.io/badge/Embeddings-SentenceTransformers-purple)
 
-A mini prototype developed for the Biocon Enterprise Analytics & AI Internship.
+A mini prototype developed for the Biocon Enterprise Analytics & AI.
 
 The project demonstrates how a **Center of Excellence (COE) digital platform** can combine:
 
