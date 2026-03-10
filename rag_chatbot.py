@@ -12,10 +12,11 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 # -----------------------------
 st.set_page_config(page_title="COE AI Chatbot", layout="wide")
 st.title("COE AI Chatbot (RAG-Based)")
-st.markdown("Ask questions about Lean, Six Sigma, KPI tracking, and operational excellence.")
+st.caption("Ask questions about Lean, Six Sigma, KPI tracking, and operational excellence.")
 
 DOCS_PATH = "docs"
 FALLBACK_ANSWER = "I could not find a reliable answer in the provided documents."
+
 
 # -----------------------------
 # Small helper for repeated junk
@@ -100,25 +101,21 @@ def load_generator():
 vectorstore = load_and_index_documents()
 tokenizer, model = load_generator()
 
-# -----------------------------
-# Query Input
-# -----------------------------
-query = st.text_input("Enter your question:")
 
-if query:
-    cleaned_query = query.strip()
+# -----------------------------
+# RAG Answer Function
+# -----------------------------
+def generate_rag_response(cleaned_query: str):
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+
     print(f"🔎 User query: {cleaned_query}")
-    with st.spinner("Retrieving relevant context and generating answer..."):
-    
-        retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+    print("📡 Retrieving relevant chunks...")
+    retrieved_docs = retriever.invoke(cleaned_query)
+    print(f"✅ Retrieved {len(retrieved_docs)} chunks")
 
-        print("📡 Retrieving relevant chunks...")
-        retrieved_docs = retriever.invoke(cleaned_query)
-        print(f"✅ Retrieved {len(retrieved_docs)} chunks")
+    context = "\n\n".join([doc.page_content for doc in retrieved_docs])
 
-        context = "\n\n".join([doc.page_content for doc in retrieved_docs])
-
-        prompt = f"""   
+    prompt = f"""
 Answer the question using only the context below.
 
 Give a clear answer in 2 to 4 complete sentences.
@@ -134,27 +131,27 @@ Context:
 Answer:
 """
 
-        print("🧠 Generating answer...")
-        inputs = tokenizer(
-            prompt,
-            return_tensors="pt",
-            truncation=True,
-            max_length=512
-        )
+    print("🧠 Generating answer...")
+    inputs = tokenizer(
+        prompt,
+        return_tensors="pt",
+        truncation=True,
+        max_length=512
+    )
 
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=100,
-            min_new_tokens=20,
-            num_beams=4,
-            do_sample=False,
-            early_stopping=True,
-            repetition_penalty=1.2,
-            no_repeat_ngram_size=3
-        )
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=100,
+        min_new_tokens=20,
+        num_beams=4,
+        do_sample=False,
+        early_stopping=True,
+        repetition_penalty=1.2,
+        no_repeat_ngram_size=3
+    )
 
-        result = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
-        result = clean_generated_answer(result)
+    result = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+    result = clean_generated_answer(result)
 
     # -----------------------------
     # Confidence Score Heuristic
@@ -163,31 +160,87 @@ Answer:
     avg_chunk_len = sum(len(doc.page_content) for doc in retrieved_docs) / max(retrieved_count, 1)
 
     if result == FALLBACK_ANSWER:
-        confidence = 0.25
+        confidence = 25
     elif retrieved_count == 3 and avg_chunk_len > 150:
-        confidence = 0.88
+        confidence = 88
     elif retrieved_count >= 2:
-        confidence = 0.74
+        confidence = 74
     else:
-        confidence = 0.58
+        confidence = 58
 
-    print(f"✅ Confidence: {confidence * 100:.0f}%")
-
-    # -----------------------------
-    # Output
-    # -----------------------------
-    st.subheader("Answer")
-    st.write(result)
-    st.divider()
-
-    st.subheader("Confidence Score")
-    st.write(f"{confidence * 100:.0f}%")
-    st.caption("Confidence is estimated using a simple heuristic based on retrieval quality.")
-
-    st.subheader("Retrieved Context (Top 3 Chunks)")
-    for i, doc in enumerate(retrieved_docs, start=1):
+    sources = []
+    for doc in retrieved_docs:
         source_name = os.path.basename(doc.metadata.get("source", "Unknown Source"))
-        with st.expander(f"Retrieved Source {i} - {source_name}"):
-            st.write(doc.page_content)
+        sources.append({
+            "name": source_name,
+            "content": doc.page_content
+        })
 
-    print("✅ Output displayed")
+    print(f"✅ Confidence: {confidence}%")
+
+    return result, confidence, sources
+
+
+# -----------------------------
+# Session State for Chat History
+# -----------------------------
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+# -----------------------------
+# Display Chat History
+# -----------------------------
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+        if message["role"] == "assistant":
+            col1, col2 = st.columns([1, 4])
+            with col1:
+                st.metric("Confidence", f"{message['confidence']}%")
+
+            with st.expander("Retrieved Context (Top 3 Chunks)"):
+                for idx, source in enumerate(message["sources"], start=1):
+                    st.markdown(f"**Source {idx}: {source['name']}**")
+                    st.write(source["content"])
+
+
+# -----------------------------
+# Chat Input
+# -----------------------------
+if prompt := st.chat_input("Ask a question about operational excellence..."):
+    cleaned_query = prompt.strip()
+
+    # Save and show user message
+    st.session_state.messages.append({
+        "role": "user",
+        "content": cleaned_query
+    })
+
+    with st.chat_message("user"):
+        st.markdown(cleaned_query)
+
+    # Generate and show assistant response
+    with st.chat_message("assistant"):
+        with st.spinner("Retrieving relevant context and generating answer..."):
+            response_text, confidence_score, sources = generate_rag_response(cleaned_query)
+
+        st.markdown(response_text)
+
+        col1, col2 = st.columns([1, 4])
+        with col1:
+            st.metric("Confidence", f"{confidence_score}%")
+
+        with st.expander("Retrieved Context (Top 3 Chunks)"):
+            for idx, source in enumerate(sources, start=1):
+                st.markdown(f"**Source {idx}: {source['name']}**")
+                st.write(source["content"])
+
+        # Save assistant message
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": response_text,
+            "confidence": confidence_score,
+            "sources": sources
+        })
