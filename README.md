@@ -207,7 +207,7 @@ Answer + Sources + Confidence Score
 ## 1️⃣ Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/ajayvofficial0/Coe-digital-enablement-prototype>
 cd coe-digital-enablement-prototype
 ```
 
