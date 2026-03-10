@@ -1,5 +1,9 @@
-Operational excellence frameworks help organizations continuously improve quality, efficiency, and business outcomes.
+Operational excellence frameworks are structured approaches used by organizations to continuously improve processes, efficiency, and business outcomes. These frameworks focus on delivering high quality results while minimizing waste and inefficiencies.
 
-Common excellence approaches include Lean, Six Sigma, and Kaizen.
+Common operational excellence approaches include Lean, Six Sigma, and Kaizen. These frameworks emphasize continuous improvement, standardized processes, data-driven decision making, and strong leadership commitment.
 
-These frameworks promote standardization, waste reduction, continuous improvement, and better decision making.
+Lean focuses on eliminating waste and improving process flow. Six Sigma focuses on reducing defects and improving process consistency through statistical methods. Kaizen focuses on incremental improvements through employee participation and collaborative problem solving.
+
+Organizations that adopt operational excellence frameworks often experience improvements in productivity, cost efficiency, quality, and customer satisfaction.
+
+Operational excellence initiatives are typically supported by performance tracking systems, KPI dashboards, and governance structures to ensure long-term success.

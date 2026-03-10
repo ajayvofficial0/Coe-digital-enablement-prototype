@@ -1,10 +1,13 @@
-Six Sigma is a process improvement methodology focused on reducing defects and variation.
+Six Sigma is a data-driven methodology used to improve business processes by reducing defects and minimizing variation. It was originally developed at Motorola and later adopted widely by companies across manufacturing, technology, and healthcare industries.
 
-The main Six Sigma improvement cycle is DMAIC:
-- Define
-- Measure
-- Analyze
-- Improve
-- Control
+The primary goal of Six Sigma is to improve quality by identifying and eliminating causes of defects and inefficiencies. The approach relies heavily on statistical analysis, structured problem-solving, and continuous improvement practices.
 
-Six Sigma uses data-driven decision making and statistical analysis to improve quality and efficiency.
+The main Six Sigma improvement cycle is known as DMAIC:
+
+Define – Identify the problem, project goals, and customer requirements.
+Measure – Collect data and measure current process performance.
+Analyze – Identify root causes of defects or inefficiencies.
+Improve – Implement solutions to address root causes.
+Control – Monitor the process to ensure improvements are sustained.
+
+Six Sigma helps organizations improve operational efficiency, reduce errors, increase customer satisfaction, and achieve measurable performance improvements.

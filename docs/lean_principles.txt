@@ -1,10 +1,13 @@
-Lean principles focus on maximizing customer value while minimizing waste.
+Lean principles focus on maximizing customer value while minimizing waste in a process. The concept originated from the Toyota Production System and has since been widely adopted across manufacturing, healthcare, and enterprise operations.
 
-The five lean principles are:
-1. Identify value
-2. Map the value stream
-3. Create flow
-4. Establish pull
-5. Pursue perfection
+Lean identifies different forms of waste such as overproduction, waiting time, defects, excess inventory, unnecessary motion, and unused employee talent. Eliminating these wastes helps organizations improve efficiency and deliver higher value to customers.
 
-Lean aims to remove waste such as overproduction, waiting, defects, excess inventory, and unnecessary motion.
+The five core Lean principles are:
+
+1. Identify Value – Understand what the customer values.
+2. Map the Value Stream – Identify steps in the process and remove waste.
+3. Create Flow – Ensure work flows smoothly without interruptions.
+4. Establish Pull – Produce only what is needed when it is needed.
+5. Pursue Perfection – Continuously improve processes.
+
+Organizations use Lean to improve productivity, reduce operational costs, and enhance quality outcomes. Lean methods are commonly used together with other improvement frameworks such as Six Sigma and Kaizen.
