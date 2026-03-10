@@ -18,7 +18,6 @@ The project demonstrates how a **Center of Excellence (COE) digital platform** c
 to support **enterprise operational excellence initiatives**.
 
 ---
----
 
 # Demo Screenshots
 
@@ -207,7 +206,7 @@ Answer + Sources + Confidence Score
 ## 1️⃣ Clone the repository
 
 ```bash
-git clone <https://github.com/ajayvofficial0/Coe-digital-enablement-prototype>
+git clone https://github.com/ajayvofficial0/Coe-digital-enablement-prototype
 cd coe-digital-enablement-prototype
 ```
 
